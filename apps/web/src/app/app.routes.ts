@@ -4,7 +4,7 @@ import { authGuard, guestGuard } from './core/auth/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'app/calendar',
+    redirectTo: 'app/dashboard',
     pathMatch: 'full',
   },
   {
@@ -30,6 +30,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./layout/shell/shell.component').then((m) => m.ShellComponent),
     children: [
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard-view/dashboard-view.component').then(
+            (m) => m.DashboardComponent
+          ),
+      },
       {
         path: 'calendar',
         loadComponent: () =>
@@ -79,7 +86,7 @@ export const routes: Routes = [
             (m) => m.SearchViewComponent
           ),
       },
-      { path: '', redirectTo: 'calendar', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
   { path: '**', redirectTo: 'app/calendar' },

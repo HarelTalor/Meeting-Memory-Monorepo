@@ -297,6 +297,7 @@ export class SidebarComponent {
   readonly sse = inject(SseService);
 
   readonly navItems: NavItem[] = [
+    { label: 'Dashboard',    icon: 'dashboard',       route: '/app/dashboard' },
     { label: 'Calendar',     icon: 'calendar_month',  route: '/app/calendar' },
     { label: 'My Tasks',     icon: 'task_alt',         route: '/app/tasks' },
     { label: 'History',      icon: 'history',          route: '/app/history' },

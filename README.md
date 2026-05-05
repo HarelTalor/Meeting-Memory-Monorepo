@@ -1,52 +1,53 @@
-# Meeting Memory - Startup Manual 🚀
-
-Meeting Memory is a powerful monorepo-based application for managing meetings, tracking decisions, and organizing tasks.
-
----
-
-## 🛠 Prerequisites
-
-Before you start, you need to download and install the following:
-
-1.  **Node.js**: [Download and Install Node.js](https://nodejs.org/) (Recommended version: 18.x or 20.x).
-2.  **MongoDB**:
-    -   **Option A**: [Download MongoDB Community Server](https://www.mongodb.com/try/download/community) for local installation.
-    -   **Option B (Recommended)**: Install [Docker](https://www.docker.com/) to run the database in a container.
-3.  **Git**: [Download Git](https://git-scm.com/).
-4.  **Nx Console (Optional but Recommended)**: A VS Code extension to manage the monorepo easily.
+# 🛰️ Meeting Memory
+> A high-performance, microservices-based workspace for capturing meetings, decisions, and tasks.
 
 ---
 
-## 🚀 How to Start the Project
+## ✨ Feature Highlights
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/HarelTalor/Meeting-Memory-Monorepo.git
-cd Meeting-Memory-Monorepo
-```
+*   **📅 Intelligent Calendar**: Seamlessly manage meetings with a powerful monthly and weekly view.
+*   **👥 Participant Tracking**: Manage internal members and guest participants without complex user management.
+*   **🏗️ Cascading Deletes**: Intelligent data integrity that cleans up tasks when meetings are removed.
+*   **🔍 Unified Search**: Search through titles, summaries, and participant names with low-latency regex matching.
+*   **⚡ Real-time Updates**: Real-time notifications for deadlines and status changes.
+*   **🌗 Dark Mode**: Premium dark-mode aesthetics optimized for long-session productivity.
 
-### 2. Install Dependencies
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | Angular 17, Signals, RxJS, Material 3, FullCalendar |
+| **Backend** | Node.js, Express, Mongoose, Zod |
+| **Architecture** | Nx Monorepo, Microservices, API Gateway |
+| **Storage** | MongoDB, Redis (Pub/Sub) |
+
+---
+
+## 🚀 Quick Start Guide
+
+### 1. Prerequisites
+- **Node.js** (v18+)
+- **MongoDB** (running on `:27017`)
+- **Docker** (optional, for easiest database setup)
+
+### 2. Installation
 ```bash
 npm install
 ```
 
-### 3. Setup Environment
-Ensure you have a `.env` file in the root directory (one is included in the repository for development).
-
-### 4. Start the Database
-If using Docker:
+### 3. Database Setup (Docker)
 ```bash
 docker-compose up -d mongodb
 ```
-Otherwise, ensure your local MongoDB service is running on `mongodb://localhost:27017`.
 
-### 5. Launch the Application
-Run the following command to start all microservices and the web frontend simultaneously:
+### 4. Launch Development Environment
 ```bash
 npx nx run-many -t serve -c development
 ```
--   **Frontend**: `http://localhost:4200`
--   **API Gateway**: `http://localhost:3000`
+-   **Frontend**: [http://localhost:4200](http://localhost:4200)
+-   **API Gateway**: [http://localhost:3000](http://localhost:3000)
 
 ---
 
@@ -55,23 +56,22 @@ npx nx run-many -t serve -c development
 -   **View Data**: Use [MongoDB Compass](https://www.mongodb.com/products/compass) to explore the data visually.
 -   **Connection String**: `mongodb://localhost:27017`
 -   **Collections**:
-    -   `meetings`: All meeting metadata, decisions, and guest participants.
+    -   `meetings`: Meeting metadata and decisions.
     -   `tasks`: To-do items linked to meetings.
     -   `users`: Authentication data.
 
 ---
 
-## 📚 Detailed Documentation
+## 📚 Documentation Deep-Dive
 
-For more information, explore the `docs` folder:
--   [Architecture Overview](./docs/architecture.md)
--   [API Guide](./docs/api-guide.md)
--   [Database Manual](./docs/database.md)
+For detailed technical specs, explore the `docs` directory:
+-   [Architecture Overview](./docs/architecture.md) — System diagrams and microservice breakdown.
+-   [API Guide](./docs/api-guide.md) — Endpoint specifications and examples.
+-   [Database Manual](./docs/database.md) — Schema details and tool recommendations.
 
 ---
 
 ## 🛑 Troubleshooting
 
--   **Zombie Processes**: If the server won't start because ports are "in use," run:
-    `taskkill /F /IM node.exe` (Windows) or `killall node` (Linux/Mac).
--   **Search Issues**: If search returns nothing, ensure the `meeting-service` is running and MongoDB is connected.
+-   **Zombie Processes**: If ports are blocked, run: `taskkill /F /IM node.exe` (Win) or `killall node` (Mac/Linux).
+-   **Build Errors**: Run `npx nx reset` to clear cache if you encounter stale type errors.

@@ -1,12 +1,13 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, effect } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { SseService } from '../../core/sse/sse.service';
 
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent],
+  imports: [RouterOutlet, SidebarComponent, MatSnackBarModule],
   template: `
     <div class="layout">
       <app-sidebar />
@@ -29,5 +30,25 @@ import { SseService } from '../../core/sse/sse.service';
 })
 export class ShellComponent implements OnInit {
   private readonly sse = inject(SseService);
+  private readonly snackBar = inject(MatSnackBar);
+
+  constructor() {
+    // Show a snackbar when a new notification arrives
+    effect(() => {
+      const notifications = this.sse.notifications();
+      if (notifications.length > 0) {
+        const latest = notifications[0];
+        // Only show for unread ones (usually the first one in the signal)
+        if (!latest.read) {
+          this.snackBar.open(latest.message, 'View', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom'
+          });
+        }
+      }
+    });
+  }
+
   ngOnInit(): void { this.sse.connect(); }
 }

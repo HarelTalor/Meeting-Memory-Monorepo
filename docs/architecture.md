@@ -2,6 +2,29 @@
 
 Meeting Memory is built as a **Microservices Monorepo** using [Nx](https://nx.dev). This architecture allows for independent scaling, deployment, and development of different system components while sharing types and utilities.
 
+## System Diagram
+
+```mermaid
+graph TD
+    User((User)) --> WebApp[Angular Web App]
+    WebApp --> Gateway[API Gateway :3000]
+    
+    subgraph Services
+        Gateway --> AuthService[Auth Service :3001]
+        Gateway --> MeetingService[Meeting Service :3002]
+        Gateway --> TaskService[Task Service :3003]
+        Gateway --> NotificationService[Notification Service :3004]
+    end
+    
+    AuthService --> AuthDB[(Auth DB)]
+    MeetingService --> MeetingDB[(Meeting DB)]
+    TaskService --> TaskDB[(Tasks DB)]
+    NotificationService --> NotifDB[(Notif DB)]
+    
+    MeetingService -.-> TaskService
+    TaskService -.-> NotificationService
+```
+
 ## Core Components
 
 ### 1. Frontend (Web App)
